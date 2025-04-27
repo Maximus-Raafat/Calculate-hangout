@@ -1,0 +1,37 @@
+<div class="card container my-4">
+    <h3 class="my-4">Add Expense</h3>
+    <div class="container ">
+        <div class="mx-5 my-4 d-flex">
+            <label for="Description" class="t-bold">Enter Description</label>
+            <input type="text" placeholder="Description" [(ngModel)]="description" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+        </div>
+        <div class="mx-5 my-4 d-flex">
+            <label for="placeLocation" class="t-bold">Enter PlaceLocation</label>
+
+            <input type="text" placeholder="placeLocation" [(ngModel)]="placeLocation" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+        </div>
+        <div class="mx-5 my-4 d-flex">
+            <label for="Amount" class="t-bold">Enter Amount</label>
+
+            <input type="text" placeholder="Amount" [(ngModel)]="amount" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+        </div>
+        <div class="mx-5 my-4 d-flex">
+            <label for="select Who Paid" class="mx-2">select Who Paid</label>
+            <select class="custom-select custom-select-lg mb-3 px-5" [(ngModel)]="paidByUserId">
+                <option selected> Open this select user</option>
+                <option *ngFor="let user of expenseService.getUsers()" [value]="user.id">{{ user.name }}</option>
+            </select>    
+        </div>
+      <div class="mx-5 my-4 ">
+        <p>Who Shared:</p>
+        <div class="form-check" *ngFor="let user of expenseService.getUsers()">
+            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1"  [value]="user.id" (change)="toggleUser(user.id)" >
+            <label class="form-check-label" for="defaultCheck1">
+                {{ user.name }}
+            </label>
+          </div>
+          
+          <button (click)="addExpense()"type="button" class="btn btn-outline-primary my-4">Add</button>
+        </div>
+    </div>
+</div>

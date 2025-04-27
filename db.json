@@ -1,0 +1,47 @@
+{"expenses":[
+    {
+      "id": "e1",
+      "description": "Pizza",
+      "placeLocation":"street 9 Beside Mcdonlas",
+      "amount": 200,
+      "paidByUserId": "u1",
+      "sharedWithUserIds": ["u1", "u2"]
+    },
+    {
+      "id": "e2",
+      "description": "Taxi",
+      "placeLocation":"street 9 Beside Mcdonlas",
+      "amount": 100,
+      "paidByUserId": "u2",
+      "sharedWithUserIds": ["u2", "u3"]
+    },
+    {
+      "id": "e3",
+      "description": "Coffee",
+      "placeLocation":"street 9 Beside Mcdonlas",
+      "amount": 60,
+      "paidByUserId": "u3",
+      "sharedWithUserIds": ["u3", "u1"]
+    }
+  ],
+  "users":[
+    {
+        "id": "u1",
+        "name": "Ahmed",
+        "email": "ahmed@example.com",
+        "balance": 0
+      },
+      {
+        "id": "u2",
+        "name": "Sarah",
+        "email": "sarah@example.com",
+        "balance": 0
+      },
+      {
+        "id": "u3",
+        "name": "Kareem",
+        "email": "kareem@example.com",
+        "balance": 0
+      }
+  ]
+ }
