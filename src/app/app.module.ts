@@ -6,21 +6,24 @@ import { AppComponent } from './app.component';
 import {MatButtonModule} from '@angular/material/button';
 import { AddExpenseComponent } from './Featurees/add-expense/add-expense.component';
 import { ExpensesComponent } from './Featurees/expenses/expenses.component';
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { HttpClientModule } from  '@angular/common/http';
+import { UsersComponent } from './Featurees/users/users.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AddExpenseComponent,
-    ExpensesComponent
+    ExpensesComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     MatButtonModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [
     provideClientHydration()

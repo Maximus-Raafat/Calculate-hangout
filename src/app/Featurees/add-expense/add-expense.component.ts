@@ -1,35 +1,56 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { EspenseServicesService } from '../../Core/services/espense-services.service';
+import {FormArray, FormBuilder, FormControl, FormGroup, } from '@angular/forms';
+import { User } from '../../Core/models/user.model';
 
 @Component({
   selector: 'add-expense',
   templateUrl: './add-expense.component.html',
   styleUrl: './add-expense.component.css'
 })
-export class AddExpenseComponent {
-  description='';
-  placeLocation='';
-  amount=0;
-  paidByUserId='';
-  sharedWithUserIds:string[]=[];
-  constructor(public expenseService:EspenseServicesService){}
+export class AddExpenseComponent implements OnInit{
+  expenseForm!: FormGroup;
+  users: User[] = [];
+  isContributor: boolean = false;
 
-  addExpense(){
-    this.expenseService.addExpose(this.description,this.placeLocation,this.amount,this.paidByUserId,this.sharedWithUserIds)
-    this.description = "";
-    this.placeLocation = ""
-    this.amount = 0;
-    this.paidByUserId = ""
-
+  constructor(private fb: FormBuilder,public expenseService:EspenseServicesService){}
+  ngOnInit(): void {
+    this.intallForm();
+    this.users = this.expenseService.getUsers();
+    
   }
+  addExpense(){
+    const { description, placeLocation, amount, paidByUserId, contributor,WhoShareAmount,sharedUserIds, } = this.expenseForm.value;
+    this.expenseService.addExpose(description, placeLocation, amount, paidByUserId,contributor ,WhoShareAmount,sharedUserIds );
+  }
+  intallForm():void{ 
+    this.expenseForm = this.fb.group({
+      description: [''],
+      placeLocation: [''],
+      amount: [''],
+      paidByUserId: [''],
+      contributor:[''],
+      WhoShareAmount:[''],
+      sharedUserIds: this.fb.array([])
+    });
+  }
+  toggleUser(userId: string, event: Event) {
+    const isChecked = (event.target as HTMLInputElement).checked;
 
-  toggleUser(userId: string) {
-    const index = this.sharedWithUserIds.indexOf(userId);
-    if (index === -1) {
-      this.sharedWithUserIds.push(userId); 
+    const sharedUserIds = this.expenseForm.get('sharedUserIds') as FormArray;
+  
+    if (isChecked) {
+      sharedUserIds.push(this.fb.control(userId));
     } else {
-      this.sharedWithUserIds.splice(index, 1); 
+      const index = sharedUserIds.controls.findIndex((x: { value: string; }) => x.value === userId);
+      if (index !== -1) {
+        sharedUserIds.removeAt(index);
+      }
     }
   }
-  
+    
+  sharedWithMony() : void {
+
+  }
+
 }

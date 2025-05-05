@@ -1,37 +1,64 @@
-<div class="card container my-4">
+<div class="card container my-4" [formGroup]="expenseForm">
     <h3 class="my-4">Add Expense</h3>
     <div class="container ">
         <div class="mx-5 my-4 d-flex">
             <label for="Description" class="t-bold">Enter Description</label>
-            <input type="text" placeholder="Description" [(ngModel)]="description" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+            <input type="text" placeholder="Description" formControlName="description" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
         </div>
         <div class="mx-5 my-4 d-flex">
             <label for="placeLocation" class="t-bold">Enter PlaceLocation</label>
 
-            <input type="text" placeholder="placeLocation" [(ngModel)]="placeLocation" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+            <input type="text" placeholder="placeLocation"  formControlName="placeLocation" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
         </div>
         <div class="mx-5 my-4 d-flex">
             <label for="Amount" class="t-bold">Enter Amount</label>
 
-            <input type="text" placeholder="Amount" [(ngModel)]="amount" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+            <input type="number" placeholder="Amount" formControlName="amount" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
         </div>
         <div class="mx-5 my-4 d-flex">
             <label for="select Who Paid" class="mx-2">select Who Paid</label>
-            <select class="custom-select custom-select-lg mb-3 px-5" [(ngModel)]="paidByUserId">
+            <select class="custom-select custom-select-lg mb-3 px-5"formControlName="paidByUserId">
                 <option selected> Open this select user</option>
-                <option *ngFor="let user of expenseService.getUsers()" [value]="user.id">{{ user.name }}</option>
+                <option *ngFor="let user of users" [value]="user.id">{{ user.name }}</option>
             </select>    
         </div>
-      <div class="mx-5 my-4 ">
-        <p>Who Shared:</p>
-        <div class="form-check" *ngFor="let user of expenseService.getUsers()">
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1"  [value]="user.id" (change)="toggleUser(user.id)" >
-            <label class="form-check-label" for="defaultCheck1">
-                {{ user.name }}
+        <div class="form-check">
+            <input class="form-check-input"
+                   type="checkbox"
+                   id="flexCheckDefault"
+                   [(ngModel)]="isContributor"
+                   [ngModelOptions]="{ standalone: true }">
+            <label class="form-check-label" for="flexCheckDefault">
+              Is any Contributor?
             </label>
           </div>
-          
-          <button (click)="addExpense()"type="button" class="btn btn-outline-primary my-4">Add</button>
+        <div class="mx-5 my-4" *ngIf="isContributor">
+            <div>
+                <label for="select Who Paid" class="mx-2">Who Shared with balance</label>
+                <select class="custom-select custom-select-lg mb-3 px-5" formControlName="contributor">
+                    <option selected> Open this select user</option>
+                    <option *ngFor="let user of users" [value]="user.id">{{ user.name }}</option>
+                </select>
+            </div>
+            <div>
+                <label for="Amount" class="t-bold">Enter Amount</label>
+                <input type="number" placeholder="Who Share Amount" formControlName="WhoShareAmount" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">    
+            </div>
+        </div>
+
+      <div class="mx-5 my-4 ">
+        <p>Who Shared:</p>
+        <div class="form-check" *ngFor="let user of users">
+            <input 
+            class="form-check-input" 
+            type="checkbox"  
+            [value]="user.id"  
+            (change)="toggleUser(user.id, $event)">
+            <label class="form-check-label">
+            {{ user.name }}
+            </label>
+          </div>
+          <button (click)="addExpense()" type="button" class="btn btn-outline-primary my-4">Add</button>
         </div>
     </div>
 </div>

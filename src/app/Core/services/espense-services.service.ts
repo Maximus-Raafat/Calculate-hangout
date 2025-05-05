@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, forkJoin, of } from 'rxjs';
+import { BehaviorSubject, catchError, forkJoin, Observable, of, tap, throwError } from 'rxjs';
 import { Expense } from '../models/expenss.model';
 import { User } from '../models/user.model';
 import { v4 as uuidv4 } from 'uuid';
 import { HttpClient } from '@angular/common/http';
+import { error } from 'console';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class EspenseServicesService {
   private expensesSubject = new BehaviorSubject<Expense[]>([]);
   expenses$ = this.expensesSubject.asObservable();
 
-  // this for folloing the state of users! like who in this conclusion
+  // this for fllowing the state of users! like who in this conclusion
   private usersSubject = new BehaviorSubject<User[]>([])
   users$ = this.usersSubject.asObservable();
 
@@ -43,37 +44,74 @@ private loadInitialData() : void {
 })
 }
 
-  addUser(user: User) {
-    const users = this.usersSubject.value;
-    this.usersSubject.next([...users, user]);
-  }
+addUser(user: User): Observable<User> {
+  return this.http.post<User>(`${this.urlApi}/users`,user).pipe(
+    tap(addedUser=>{
+       const currentUsers = this.usersSubject.getValue();
+       this.usersSubject.next([...currentUsers,addedUser])
+    }),
+    catchError((error)=>{
+      console.log('Failed to add user:',error);
+      return throwError(()=> error);
+    })
+  )
+ }
 
-  addExpose(description:string, placeLocation:string,amount: number,paidByUserId: string,sharedWithUserIds: string[]):void {
-    const newExponse = new Expense(uuidv4(),description,placeLocation,amount,paidByUserId,sharedWithUserIds)
-    
-    const expense = this.expensesSubject.value;
-    
-    this.expensesSubject.next([...expense,newExponse]);
+  addExpose(description:string, placeLocation:string,amount: number,paidByUserId: string,contributor:string,WhoShareAmount:number,sharedWithUserIds: string[]):void {
+    const newExponse = new Expense(uuidv4(),description,placeLocation,amount,paidByUserId,contributor,WhoShareAmount,sharedWithUserIds)
+    const currentExpenses  = this.expensesSubject.value;
+    this.expensesSubject.next([...currentExpenses,newExponse]);
     this.updateUserBalances(newExponse);
-    console.log(this.expensesSubject.value)
+    this.http.post<Expense>(`${this.urlApi}/expenses`,newExponse).pipe
+    (
+      catchError((error:any) =>{
+        console.error('Failed to add Expense:', error);
+        this.rollbackLastExpense(newExponse.id);
+        return of(null);
+      })
+    ).subscribe();
 
   }
 
-  private updateUserBalances(expense:Expense) :void{
-    const currentUsers = this.usersSubject.value.map(user =>({... user}));
-    const sharePerUser = expense.amount / expense.sharedWithUserIds.length;
+  rollbackLastExpense(id: any) {
+    const current = this.expensesSubject.value;
+    const updated = current.filter(expense => expense.id !== id);
+    this.expensesSubject.next(updated);
+  }
+
+// to update the balances!
+  private updateUserBalances(expense:Expense) :void {
     
-    currentUsers.forEach(user => {
-      if (user.id === expense.paidByUserId) {
-        user.balance += expense.amount - sharePerUser;
-      } else if(expense.sharedWithUserIds.includes(user.id)){
-        user.balance -= sharePerUser
-      } else {}
-    });
-    console.log("Test Add Expose",currentUsers)
+    const currentUsers = this.usersSubject.value.map(user => ({ ...user }));
 
-    this.usersSubject.next(currentUsers)
+    const sharePerUser = expense.amount / expense.sharedWithUserIds.length;
+    const partialContributionAmount = expense.WhoShareAmount;
+    const partialPayerId = expense.contributor;
+  
+    currentUsers.forEach(user => {
+
+      const isPayer = user.id === expense.paidByUserId;
+      const isSharedUser = expense.sharedWithUserIds.includes(user.id);
+      const isPartialPayer = user.id === partialPayerId;
+
+      if(isPayer){
+        user.balance += expense.amount - sharePerUser
+
+        if (partialContributionAmount > 0) {
+          user.balance -= partialContributionAmount;
+        }
+      }
+      if (isSharedUser && !isPayer) {
+        user.balance -= sharePerUser;
+      }
+      if (isPartialPayer) {
+        user.balance += partialContributionAmount;
+      }
+    });
+    this.usersSubject.next(currentUsers);
+
   }
+
   getUsers(): User[] {
     return this.usersSubject.value;
   }

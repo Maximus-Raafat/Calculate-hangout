@@ -10,14 +10,14 @@
               </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let expense of espense$ |async">
+            <tr *ngFor="let expense of expensesWithUsers$ | async">
               <td>{{ expense.description }}</td>
               <td>{{ expense.placeLocation }}</td>
               <td>{{ expense.amount }}</td>
-              <td>{{ getUserName(expense.paidByUserId) | async }}</td>
-              <td>{{ getSharedUserNames(expense.sharedWithUserIds) | async  }}</td>
-            </tr>
+              <td>{{ expense.paidByUserName }}</td>
+              <td>{{ expense.sharedWithUserNames }}</td>
+                  </tr>
           </tbody>
       </table>
-      
+      <br>
 </div>

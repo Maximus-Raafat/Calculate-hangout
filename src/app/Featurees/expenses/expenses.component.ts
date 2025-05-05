@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { EspenseServicesService } from '../../Core/services/espense-services.service';
-import { map, Observable } from 'rxjs';
+import { map, Observable,combineLatest } from 'rxjs';
 
 @Component({
   selector: 'expenses',
@@ -8,28 +8,21 @@ import { map, Observable } from 'rxjs';
   styleUrl: './expenses.component.css'
 })
 export class ExpensesComponent {
-  espense$ = this.expenseService.expenses$
-  users$ = this.expenseService.users$
+  expensesWithUsers$ = combineLatest([
+    this.expenseService.expenses$,
+    this.expenseService.users$
+  ]).pipe(
+    map(([expenses, users]) => {
+      return expenses.map(expense => ({
+        ...expense,
+        paidByUserName: users.find(u => u.id === expense.paidByUserId)?.name || 'Unknown',
+        sharedWithUserNames: expense.sharedWithUserIds
+          .map(id => users.find(u => u.id === id)?.name || 'Unknown')
+          .join(', ')
+      }));
+    })
+  );
+  
   constructor(public expenseService: EspenseServicesService) { }
 
-  getUserName(id: string): Observable<string> {
-    return this.users$.pipe(
-      map(users=> {
-        console.log("test=> ", users)
-        const user = users.find(u => u.id === id);
-        return user ? user.name : "Unknown"
-      })
-    )
-  }
-
-  getSharedUserNames(ids: string[]): Observable<string>{
-    return this.users$.pipe(
-      map(users =>
-        ids.map(id => {
-          const user = users.find(u => u.id === id);
-          return user ? user.name : 'Unknown';
-        }).join(', ')
-      )
-    );
-  }
 }
