@@ -1,0 +1,25 @@
+<div class="card container my-4" >
+    <form [formGroup]="FormUser" (ngSubmit)="addUser()">
+    <h3 class="my-4">Add User</h3>
+    <div class="container ">
+        <div class="mx-5 my-4 d-flex">
+            <label for="Name" class="t-bold">Enter Name</label>
+            <input type="text" placeholder="Name" formControlName="name" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+        </div>
+        <div *ngIf="FormUser.get('name')?.touched && FormUser.get('name')?.invalid">
+            <small *ngIf="FormUser.get('name')?.errors?.['required']">Name is required.</small>    
+        </div>
+        
+        <div class="mx-5 my-4 d-flex">
+            <label for="email" class="t-bold">Enter email</label>
+            <input type="text" placeholder="email" formControlName="email" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+        </div>
+        <div *ngIf="FormUser.get('email')?.touched && FormUser.get('email')?.invalid">
+            <small *ngIf="FormUser.get('email')?.errors?.['required']">email is required.</small>    
+        </div>
+    
+
+          <button type="submit" class="btn btn-outline-primary my-4" [disabled]="!FormUser.valid">Add User</button>
+    </div>
+</form>
+</div>

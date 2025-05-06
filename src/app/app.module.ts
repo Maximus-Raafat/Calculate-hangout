@@ -9,13 +9,17 @@ import { ExpensesComponent } from './Featurees/expenses/expenses.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { HttpClientModule } from  '@angular/common/http';
 import { UsersComponent } from './Featurees/users/users.component';
+import { AddUserComponent } from './Featurees/add-user/add-user.component';
+import { FeatureesComponent } from './featurees/featurees.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AddExpenseComponent,
     ExpensesComponent,
-    UsersComponent
+    UsersComponent,
+    AddUserComponent,
+    FeatureesComponent
   ],
   imports: [
     BrowserModule,

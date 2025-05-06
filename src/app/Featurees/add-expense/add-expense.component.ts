@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EspenseServicesService } from '../../Core/services/espense-services.service';
-import {FormArray, FormBuilder, FormControl, FormGroup, } from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators, } from '@angular/forms';
 import { User } from '../../Core/models/user.model';
 
 @Component({
@@ -16,7 +16,7 @@ export class AddExpenseComponent implements OnInit{
   constructor(private fb: FormBuilder,public expenseService:EspenseServicesService){}
   ngOnInit(): void {
     this.intallForm();
-    this.users = this.expenseService.getUsers();
+    this.getUser();
     
   }
   addExpense(){
@@ -25,10 +25,10 @@ export class AddExpenseComponent implements OnInit{
   }
   intallForm():void{ 
     this.expenseForm = this.fb.group({
-      description: [''],
-      placeLocation: [''],
-      amount: [''],
-      paidByUserId: [''],
+      description: ['',Validators.required],
+      placeLocation: ['',Validators.required],
+      amount: ['',Validators.required],
+      paidByUserId: ['',Validators.required],
       contributor:[''],
       WhoShareAmount:[''],
       sharedUserIds: this.fb.array([])
@@ -48,9 +48,14 @@ export class AddExpenseComponent implements OnInit{
       }
     }
   }
-    
-  sharedWithMony() : void {
-
+  getUser(): void{
+    this.expenseService.users$.subscribe({
+      next:(users)=> {
+        this.users = users
+      },
+      error:(err)=>{
+        console.log('Failed to add user',err)
+      }
+    });
   }
-
 }

@@ -44,8 +44,9 @@ private loadInitialData() : void {
 })
 }
 
-addUser(user: User): Observable<User> {
-  return this.http.post<User>(`${this.urlApi}/users`,user).pipe(
+addUser(name:string, email:string,balance:number): Observable<User> {
+  const newUser = new User(uuidv4(),name,email,balance)
+  return this.http.post<User>(`${this.urlApi}/users`,newUser).pipe(
     tap(addedUser=>{
        const currentUsers = this.usersSubject.getValue();
        this.usersSubject.next([...currentUsers,addedUser])
@@ -59,11 +60,13 @@ addUser(user: User): Observable<User> {
 
   addExpose(description:string, placeLocation:string,amount: number,paidByUserId: string,contributor:string,WhoShareAmount:number,sharedWithUserIds: string[]):void {
     const newExponse = new Expense(uuidv4(),description,placeLocation,amount,paidByUserId,contributor,WhoShareAmount,sharedWithUserIds)
-    const currentExpenses  = this.expensesSubject.value;
-    this.expensesSubject.next([...currentExpenses,newExponse]);
     this.updateUserBalances(newExponse);
     this.http.post<Expense>(`${this.urlApi}/expenses`,newExponse).pipe
-    (
+    (tap(addexpose=>{
+      const currentExpenses  = this.expensesSubject.value;
+      this.expensesSubject.next([...currentExpenses,addexpose]);
+  
+    }),
       catchError((error:any) =>{
         console.error('Failed to add Expense:', error);
         this.rollbackLastExpense(newExponse.id);

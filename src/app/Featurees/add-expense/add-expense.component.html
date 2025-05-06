@@ -1,26 +1,38 @@
-<div class="card container my-4" [formGroup]="expenseForm">
+<div class="card container my-4" >
+    <form [formGroup]="expenseForm" (ngSubmit)="addExpense()">
     <h3 class="my-4">Add Expense</h3>
     <div class="container ">
         <div class="mx-5 my-4 d-flex">
             <label for="Description" class="t-bold">Enter Description</label>
             <input type="text" placeholder="Description" formControlName="description" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
         </div>
+        <div *ngIf="expenseForm.get('description')?.touched && expenseForm.get('description')?.invalid">
+            <small *ngIf="expenseForm.get('description')?.errors?.['required']">Description is required.</small>    
+        </div>
+        
         <div class="mx-5 my-4 d-flex">
             <label for="placeLocation" class="t-bold">Enter PlaceLocation</label>
-
-            <input type="text" placeholder="placeLocation"  formControlName="placeLocation" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+            <input type="text" placeholder="placeLocation" formControlName="placeLocation" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+        </div>
+        <div *ngIf="expenseForm.get('placeLocation')?.touched && expenseForm.get('placeLocation')?.invalid">
+            <small *ngIf="expenseForm.get('placeLocation')?.errors?.['required']">placeLocation is required.</small>    
         </div>
         <div class="mx-5 my-4 d-flex">
             <label for="Amount" class="t-bold">Enter Amount</label>
-
             <input type="number" placeholder="Amount" formControlName="amount" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
         </div>
+        <div *ngIf="expenseForm.get('amount')?.touched && expenseForm.get('amount')?.invalid">
+            <small *ngIf="expenseForm.get('amount')?.errors?.['required']">Amount is required.</small>    
+        </div>
         <div class="mx-5 my-4 d-flex">
-            <label for="select Who Paid" class="mx-2">select Who Paid</label>
-            <select class="custom-select custom-select-lg mb-3 px-5"formControlName="paidByUserId">
+            <label for="select Who Paid" class="mx-2">Select Who Paid</label>
+            <select class="custom-select custom-select-lg mb-3 px-5" formControlName="paidByUserId">
                 <option selected> Open this select user</option>
                 <option *ngFor="let user of users" [value]="user.id">{{ user.name }}</option>
             </select>    
+        </div>
+        <div *ngIf="expenseForm.get('paidByUserId')?.touched && expenseForm.get('placeLocation')?.invalid">
+            <small *ngIf="expenseForm.get('paidByUserId')?.errors?.['required']">Select Who Paid is required.</small>    
         </div>
         <div class="form-check">
             <input class="form-check-input"
@@ -58,7 +70,8 @@
             {{ user.name }}
             </label>
           </div>
-          <button (click)="addExpense()" type="button" class="btn btn-outline-primary my-4">Add</button>
+          <button type="submit" class="btn btn-outline-primary my-4" [disabled]="!expenseForm.valid">Add</button>
         </div>
     </div>
+</form>
 </div>

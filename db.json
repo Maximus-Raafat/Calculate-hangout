@@ -25,6 +25,62 @@
         "u2",
         "u1"
       ]
+    },
+    {
+      "id": "f32c8a88-256a-4922-a1f1-d08e63922c2e",
+      "placeLocation": "test",
+      "description": "test",
+      "amount": 150,
+      "paidByUserId": "u1",
+      "contributor": "",
+      "WhoShareAmount": "",
+      "sharedWithUserIds": [
+        "u1",
+        "u2",
+        "u3"
+      ]
+    },
+    {
+      "id": "f5aa60bf-cf20-426c-b7e9-aefee07ec8f3",
+      "placeLocation": "test2",
+      "description": "test2",
+      "amount": 150,
+      "paidByUserId": "u2",
+      "contributor": "",
+      "WhoShareAmount": "",
+      "sharedWithUserIds": [
+        "u3",
+        "u2",
+        "u1"
+      ]
+    },
+    {
+      "id": "4b2f755b-e4e6-40a6-9908-594cd0b05be2",
+      "placeLocation": "test2",
+      "description": "test2",
+      "amount": 150,
+      "paidByUserId": "u2",
+      "contributor": "",
+      "WhoShareAmount": "",
+      "sharedWithUserIds": [
+        "u3",
+        "u2",
+        "u1"
+      ]
+    },
+    {
+      "id": "fba027d7-9838-4bd4-80d9-ace96354a442",
+      "placeLocation": "test2",
+      "description": "test2",
+      "amount": 150,
+      "paidByUserId": "u2",
+      "contributor": "",
+      "WhoShareAmount": "",
+      "sharedWithUserIds": [
+        "u3",
+        "u2",
+        "u1"
+      ]
     }
   ],
   "users": [
@@ -45,6 +101,62 @@
       "name": "Kareem",
       "email": "kareem@example.com",
       "balance": -50
+    },
+    {
+      "id": "de82447d-d693-48f6-9375-5c7d3b5a7c5e",
+      "name": "maximus ",
+      "email": "max92@gmail.com",
+      "balance": 0,
+      "expenses": []
+    },
+    {
+      "id": "a1d87f5e-2671-4622-8b5f-b4a4d6dc095a",
+      "name": "t",
+      "email": "t@gamil",
+      "balance": 0,
+      "expenses": []
+    },
+    {
+      "id": "bd1fdd2e-dce4-493a-8e1b-f5ec8e340b2d",
+      "name": "t",
+      "email": "t@gamil.com",
+      "balance": 0,
+      "expenses": []
+    },
+    {
+      "id": "dea86f78-f65b-4bbe-9f91-ea9912d51d3f",
+      "name": "test",
+      "email": "test",
+      "balance": 0,
+      "expenses": []
+    },
+    {
+      "id": "8c79c3f0-7dfb-4c7e-93f4-4b562834c4d7",
+      "name": "test",
+      "email": "test",
+      "balance": 0,
+      "expenses": []
+    },
+    {
+      "id": "4f3e76b8-b4f2-43f4-a1af-a10ad95e6693",
+      "name": "test",
+      "email": "test",
+      "balance": 0,
+      "expenses": []
+    },
+    {
+      "id": "bf3c9abc-b7f7-45e3-b140-5771b1f94b37",
+      "name": "max222",
+      "email": "maxx@22@gmail.com",
+      "balance": 0,
+      "expenses": []
+    },
+    {
+      "id": "4f5cc8e0-1cc5-486f-8c4c-41df8b88eb4b",
+      "name": "test41",
+      "email": "test",
+      "balance": 0,
+      "expenses": []
     }
   ]
 }
