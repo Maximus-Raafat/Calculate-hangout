@@ -85,28 +85,31 @@
   ],
   "users": [
     {
-      "id": "u1",
       "name": "Ahmed",
       "email": "ahmed@example.com",
-      "balance": 100
+      "balance": 100,
+      "expenses": [],
+      "id": "u1"
     },
     {
-      "id": "u2",
       "name": "Sarah",
       "email": "sarah@example.com",
-      "balance": -50
+      "balance": -50,
+      "expenses": [],
+      "id": "u2"
     },
     {
-      "id": "u3",
       "name": "Kareem",
       "email": "kareem@example.com",
-      "balance": -50
+      "balance": -50,
+      "id": "u3",
+      "expenses": []
     },
     {
-      "id": "de82447d-d693-48f6-9375-5c7d3b5a7c5e",
-      "name": "maximus ",
+      "name": "maximus1",
       "email": "max92@gmail.com",
       "balance": 0,
+      "id": "de82447d-d693-48f6-9375-5c7d3b5a7c5e",
       "expenses": []
     },
     {
@@ -152,11 +155,10 @@
       "expenses": []
     },
     {
-      "id": "4f5cc8e0-1cc5-486f-8c4c-41df8b88eb4b",
       "name": "test41",
       "email": "test",
-      "balance": 0,
-      "expenses": []
+      "amount": "10",
+      "id": "4f5cc8e0-1cc5-486f-8c4c-41df8b88eb4b"
     }
   ]
 }

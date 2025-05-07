@@ -11,6 +11,19 @@ import { HttpClientModule } from  '@angular/common/http';
 import { UsersComponent } from './Featurees/users/users.component';
 import { AddUserComponent } from './Featurees/add-user/add-user.component';
 import { FeatureesComponent } from './Featurees/featurees.component';
+
+import {MatDialogModule} from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle,
+} from '@angular/material/dialog';
+import { DialogAnimationsExampleDialogComponent } from './dialog-animations-example-dialog/dialog-animations-example-dialog.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +31,8 @@ import { FeatureesComponent } from './Featurees/featurees.component';
     ExpensesComponent,
     UsersComponent,
     AddUserComponent,
-    FeatureesComponent
+    FeatureesComponent,
+    DialogAnimationsExampleDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +40,13 @@ import { FeatureesComponent } from './Featurees/featurees.component';
     MatButtonModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatDialogActions,
+    MatDialogClose,
+    MatDialogContent,
+    MatDialogTitle,
+
   ],
   providers: [
     provideClientHydration()

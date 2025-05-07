@@ -114,6 +114,22 @@ addUser(name:string, email:string,balance:number): Observable<User> {
     this.usersSubject.next(currentUsers);
 
   }
+  updateUser(updateUser:User):Observable<User>{
+    return this.http.put<User>(`${this.urlApi}/users/${updateUser.id}`, updateUser).pipe(
+      tap((responseUser) => {
+        console.log("responseUser ==== > ", responseUser);
+        const currentUsers = this.usersSubject.value;
+        const updatedList = currentUsers.map(user =>
+          user.id === responseUser.id ? responseUser : user
+        );
+        this.usersSubject.next(updatedList);
+      }),
+      catchError((error) => {
+        console.error('Failed to update user:', error);
+        return throwError(() => error);
+      })
+    );
+  }
 
   getUsers(): User[] {
     return this.usersSubject.value;
