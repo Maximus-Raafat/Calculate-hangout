@@ -10,8 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { HttpClientModule } from  '@angular/common/http';
 import { UsersComponent } from './Featurees/users/users.component';
 import { AddUserComponent } from './Featurees/add-user/add-user.component';
-import { FeatureesComponent } from './featurees/featurees.component';
-
+import { FeatureesComponent } from './Featurees/featurees.component';
 @NgModule({
   declarations: [
     AppComponent,
