@@ -22,6 +22,7 @@ export class AddExpenseComponent implements OnInit{
   addExpense(){
     const { description, placeLocation, amount, paidByUserId, contributor,WhoShareAmount,sharedUserIds, } = this.expenseForm.value;
     this.expenseService.addExpose(description, placeLocation, amount, paidByUserId,contributor ,WhoShareAmount,sharedUserIds );
+    this.expenseForm.reset();
   }
   intallForm():void{ 
     this.expenseForm = this.fb.group({
@@ -58,4 +59,5 @@ export class AddExpenseComponent implements OnInit{
       }
     });
   }
+  
 }

@@ -10,7 +10,7 @@
               </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let expense of expensesWithUsers$ | async">
+            <tr *ngFor="let expense of expensesWithUsers$ | async" (click)="openDilog(expense,myDialog)">
               <td>{{ expense.description }}</td>
               <td>{{ expense.placeLocation }}</td>
               <td>{{ expense.amount }}</td>
@@ -21,4 +21,94 @@
       </table>
       <br>
 </div>
+<ng-template #myDialog>
+    <h1 mat-dialog-title>Update User!</h1>
+    <div mat-dialog-content>
+        <div class="card container my-4" >
+            <form [formGroup]="formExpense" (ngSubmit)="submitUpdateUser()">
+            <h3 class="my-4">Change User!</h3>
+            <div class="container">
+                <div class="mx-5 my-4 d-flex">
+                    <label for="description" class="t-bold">Enter Description</label>
+                    <input type="text" placeholder="description" formControlName="description" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                </div>
+                <div *ngIf="formExpense.get('description')?.touched && formExpense.get('description')?.invalid">
+                    <small *ngIf="formExpense.get('description')?.errors?.['required']">description is required.</small>    
+                </div>
+                
+                <div class="mx-5 my-4 d-flex">
+                    <label for="placeLocation" class="t-bold">Enter placeLocation</label>
+                    <input type="text" placeholder="placeLocation" formControlName="placeLocation" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                </div>
+                <div *ngIf="formExpense.get('placeLocation')?.touched && formExpense.get('placeLocation')?.invalid">
+                    <small *ngIf="formExpense.get('placeLocation')?.errors?.['required']">placeLocation is required.</small>    
+                </div>
+
+                <div class="mx-5 my-4 d-flex">
+                    <label for="amount" class="t-bold">Enter amount</label>
+                    <input type="text" placeholder="amount" formControlName="amount" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                </div>
+                <div *ngIf="formExpense.get('amount')?.touched && formExpense.get('amount')?.invalid">
+                    <small *ngIf="formExpense.get('amount')?.errors?.['required']">amount is required.</small>    
+                </div>
+        
+                <div class="mx-5 my-4 d-flex">
+                    <label for="select Who Paid" class="mx-2">Select Who Paid</label>
+                    <select class="custom-select custom-select-lg mb-3 px-5" formControlName="paidByUserId">
+                        <option selected> Open this select user</option>
+                        <option *ngFor="let user of users" [value]="user.id">{{ user.name }}</option>
+                    </select>    
+                </div>
+                <div *ngIf="formExpense.get('paidByUserId')?.touched && formExpense.get('placeLocation')?.invalid">
+                    <small *ngIf="formExpense.get('paidByUserId')?.errors?.['required']">Select Who Paid is required.</small>    
+                </div>
+          
+                <p>Who Shared:</p>
+
+                  <div class="form-check" *ngFor="let user of users">
+                    
+                    <input 
+                    class="form-check-input" 
+                    type="checkbox"  
+                    [value]="user.id"  
+                    (change)="toggleUser(user.id, $event)">
+                    <label class="form-check-label">
+                    {{ user.name }}
+                    </label>
+                  </div>
+                  <div class="my-5">
+                    <div class="form-check">
+                        <input class="form-check-input"
+                        type="checkbox"
+                        id="flexCheckDefault"
+                        [(ngModel)]="isContributor"
+                        [ngModelOptions]="{ standalone: true }">
+                        <label class="form-check-label" for="flexCheckDefault">
+                        Is any Contributor?
+                        </label>
+                      </div>
+                      <div class="mx-5 my-4" *ngIf="isContributor">
+                        <div>
+                            <label for="select Who Paid" class="mx-2">Who Shared with balance</label>
+                            <select class="custom-select custom-select-lg mb-3 px-5" formControlName="contributor">
+                                <option selected> Open this select user</option>
+                                <option *ngFor="let user of users" [value]="user.id">{{ user.name }}</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="Amount" class="t-bold">Enter Amount</label>
+                            <input type="number" placeholder="Who Share Amount" formControlName="WhoShareAmount" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">    
+                        </div>
+                    </div>
+                </div>
+                  <button type="submit" class="btn btn-outline-primary my-4" [disabled]="!formExpense.valid">Update User</button>
+            </div>
+        </form>
+        </div>        
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close>Close</button>
+    </div>
+</ng-template>
+  
 <app-users><app-users/>

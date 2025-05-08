@@ -8,7 +8,7 @@
               </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let user of users$ | async" (click)="updateUser(user,myDialog)">
+            <tr *ngFor="let user of users$ | async" (click)="openDilog(user,myDialog)">
               <td>{{ user.name }}</td>
               <td>{{ user.email }}</td>
               <td>{{ user.balance }}</td>

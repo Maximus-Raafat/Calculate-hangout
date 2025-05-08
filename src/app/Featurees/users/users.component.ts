@@ -23,7 +23,7 @@ export class UsersComponent implements OnInit{
     console.log( this.users$)
   }
 
-  updateUser(updatedUser:User,templateRef: TemplateRef<any>) :void {
+  openDilog(updatedUser:User,templateRef: TemplateRef<any>) :void {
     this.intallForm(updatedUser);
     this.openDialog(templateRef);
   }
