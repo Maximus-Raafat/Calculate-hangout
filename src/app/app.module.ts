@@ -21,7 +21,8 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import { DialogAnimationsExampleDialogComponent } from './dialog-animations-example-dialog/dialog-animations-example-dialog.component';
+import { LoginComponent } from './Featurees/auth/login/login.component';
+import { RegisterComponent } from './Featurees/auth/register/register.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { DialogAnimationsExampleDialogComponent } from './dialog-animations-exam
     UsersComponent,
     AddUserComponent,
     FeatureesComponent,
-    DialogAnimationsExampleDialogComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
