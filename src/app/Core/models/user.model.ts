@@ -6,6 +6,7 @@ export class User {
         public name:string,
         public email:string,
         public balance:number = 0,
+        public password:number= 0,
         public expenses:Expense[]=[],
     ) {
          

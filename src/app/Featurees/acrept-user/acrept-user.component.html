@@ -1,0 +1,74 @@
+<div class="card container my-4">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>name</th>
+                <th>email</th>
+                <th></th>
+                <th></th>
+
+              </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let userList of acreptUserList">
+              <td>{{ userList.name }}</td>
+              <td>{{ userList.email }}</td>
+              <td><button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-success btn-block mb-3" (click)="openDilog(userList,myDialog)">Acept User</button></td>
+              <td><button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-warning tn-block mb-3">Cancel User</button></td>
+            </tr>
+          </tbody>
+      </table>
+      <br>
+</div>
+
+<ng-template #myDialog>
+    <h1 mat-dialog-title>aprove that User!</h1>
+    <div mat-dialog-content>
+        <div class="card container my-4" >
+            <form [formGroup]="formAceptUser" (ngSubmit)="submitAddOnUser()">
+            <h3 class="my-4">aprove User!</h3>
+            <div class="container">
+                <div class="mx-5 my-4 d-flex">
+                    <label for="name" class="t-bold">Enter name</label>
+                    <input type="text" placeholder="name" formControlName="name" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                </div>
+                <div *ngIf="formAceptUser.get('name')?.touched && formAceptUser.get('name')?.invalid">
+                    <small *ngIf="formAceptUser.get('name')?.errors?.['required']">name is required.</small>    
+                </div>
+                   <div class="mx-5 my-4 d-flex">
+                    <label for="email" class="t-bold">Enter email</label>
+                    <input type="text" placeholder="email" formControlName="email" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                </div>
+                <div *ngIf="formAceptUser.get('email')?.touched && formAceptUser.get('email')?.invalid">
+                    <small *ngIf="formAceptUser.get('email')?.errors?.['required']">email is required.</small>    
+                </div> 
+                 <div class="mx-5 my-4 d-flex">
+                    <label for="passowrd" class="t-bold">Enter passowrd</label>
+                    <input type="text" placeholder="password" formControlName="password" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                </div>
+                <div *ngIf="formAceptUser.get('password')?.touched && formAceptUser.get('password')?.invalid">
+                    <small *ngIf="formAceptUser.get('passowrd')?.errors?.['required']">password is required.</small>    
+                </div> 
+              <div class="form-check" *ngFor="let role of usersRole">
+                <input 
+                  class="form-check-input"
+                  type="checkbox"
+                  [value]="role.id"
+                  [checked]="selectedRoles.includes(role.id)"
+                  (change)="toggleUser(role)">
+                  
+                <label class="form-check-label">
+                  {{ role.role }}
+                </label>
+              </div>
+
+            
+                  <button type="submit" class="btn btn-outline-primary my-4" [disabled]="!formAceptUser.valid">Add the User on system</button>
+            </div>
+        </form>
+        </div>        
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close>Close</button>
+    </div>
+</ng-template>

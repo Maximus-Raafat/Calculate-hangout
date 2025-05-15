@@ -81,13 +81,27 @@
         "u2",
         "u1"
       ]
+    },
+    {
+      "id": "fec9bc0a-6324-416e-829d-814d28e51d24",
+      "placeLocation": "pizza margeta",
+      "description": "el maddie ",
+      "amount": 150,
+      "paidByUserId": "u3",
+      "contributor": "u2",
+      "WhoShareAmount": 20,
+      "sharedWithUserIds": [
+        "u1",
+        "u2",
+        "u3"
+      ]
     }
   ],
   "users": [
     {
       "name": "Ahmed",
       "email": "ahmed@example.com",
-      "password": "123456",
+      "password": "123456789",
       "role": "admin",
       "balance": 100,
       "expenses": [],
@@ -109,6 +123,55 @@
       "role": "user",
       "balance": -50,
       "id": "u3",
+      "expenses": []
+    }
+  ],
+  "acreptUser": [
+    {
+      "id": "22611852-fd7b-49a6-8579-5852314e753d",
+      "name": "max",
+      "email": "max@gmail.com",
+      "password": "123456123",
+      "expenses": []
+    },
+    {
+      "id": "f974cda4-a432-42a9-af36-ca6249490a18",
+      "name": "max1",
+      "email": "max22@example.com",
+      "password": "123456789",
+      "expenses": []
+    },
+    {
+      "id": "079ffdbe-cfbc-416e-9ad4-a6d99ae5a034",
+      "name": "admin",
+      "email": "admin@themesbrand.com",
+      "balance": "123456212",
+      "expenses": []
+    },
+    {
+      "id": "60f7d08b-2a5b-4b7c-82bd-2969e49fda51",
+      "name": "te",
+      "email": "ahmed@example.com",
+      "balance": "12212121",
+      "expenses": []
+    },
+    {
+      "id": "cb4f"
+    },
+    {
+      "id": "a250d330-6fe9-48f0-9fab-b696bebcc674",
+      "name": "admin",
+      "email": "admin@themesbrand.com",
+      "balance": 0,
+      "password": "123456789",
+      "expenses": []
+    },
+    {
+      "id": "85b52ac0-a645-470c-8169-359f047b520e",
+      "name": "admin",
+      "email": "admin@themesbrand.com",
+      "balance": 0,
+      "password": "12345612",
       "expenses": []
     }
   ]

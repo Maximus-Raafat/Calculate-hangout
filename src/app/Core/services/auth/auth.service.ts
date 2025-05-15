@@ -25,6 +25,7 @@ export class AuthService {
           this.currentUser = users[0];
           localStorage.setItem("user",JSON.stringify(this.currentUser));
           this.isLoggedInSubject.next(true);
+          this.router.navigate(['/dashBord'])
         } else {
           throw new Error('Invaild credentials');
         }

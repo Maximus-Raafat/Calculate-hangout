@@ -9,11 +9,17 @@ import { EspenseServicesService } from '../../Core/services/espense-services.ser
 })
 export class AddUserComponent implements OnInit{
   FormUser!: FormGroup;
-  constructor(private fb: FormBuilder,private expenseService:EspenseServicesService) {
+    usersRole!:[
+    {id:1,role:"admin"},
+    {id:2,role:"user"},
+  ];
+
+  constructor(private fb: FormBuilder,private expenseService:EspenseServicesService)
+  {
     
   }
   ngOnInit(): void {
-  this.intallForm();
+    this.intallForm();
   }
 
   intallForm():void{ 

@@ -37,7 +37,6 @@ export class AddExpenseComponent implements OnInit{
   }
   toggleUser(userId: string, event: Event) {
     const isChecked = (event.target as HTMLInputElement).checked;
-
     const sharedUserIds = this.expenseForm.get('sharedUserIds') as FormArray;
   
     if (isChecked) {

@@ -40,7 +40,6 @@ export class ExpensesComponent implements OnInit{
     })
   );
   intallForm(currentExpense:Expense):void{ 
-    console.log("currentExpense",currentExpense)
     this.formExpense = this.fb.group({
       description: [currentExpense.description,Validators.required],
       placeLocation: [currentExpense.placeLocation,Validators.required],
@@ -53,9 +52,7 @@ export class ExpensesComponent implements OnInit{
   }
     toggleUser(userId: string, event: Event) {
       const isChecked = (event.target as HTMLInputElement).checked;
-  
       const sharedUserIds = this.formExpense.get('sharedUserIds') as FormArray;
-    
       if (isChecked) {
         sharedUserIds.push(this.fb.control(userId));
       } else {

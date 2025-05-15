@@ -19,9 +19,13 @@ export class EspenseServicesService {
   private usersSubject = new BehaviorSubject<User[]>([])
   users$ = this.usersSubject.asObservable();
 
+  private acrpetUsersSubject = new BehaviorSubject<any[]>([])
+  acreptUsers$ = this.acrpetUsersSubject.asObservable();
+
+  
   constructor(private http: HttpClient) { 
   this.loadInitialData()
-}
+  }
 
 private loadInitialData() : void {
   forkJoin({
@@ -36,11 +40,16 @@ private loadInitialData() : void {
         console.log("Error loading Expense:", error);
         return of([]);
       })
+    ),listUserAcept:this.http.get<any[]>(`${this.urlApi}/acreptUser`).pipe(
+       catchError(error=> {
+        console.log("Error loading acreptUser:", error);
+        return of([]);
+      })
     )
-  }).subscribe(({users,expenses})=>{
+  }).subscribe(({users,expenses,listUserAcept})=>{
   this.usersSubject.next(users);
   this.expensesSubject.next(expenses);
-  
+  this.acrpetUsersSubject.next(listUserAcept)
 })
 }
 
@@ -146,7 +155,21 @@ addUser(name:string, email:string,balance:number): Observable<User> {
       })
     );
   }
-
+  registerUser(name:string,email:string,password:number):Observable<User> {
+    const expenses:[]=[];
+    const balance= 0;
+    const newUser = new User(uuidv4(),name,email,balance,password,expenses)
+    return this.http.post<User>(`${this.urlApi}/acreptUser`,newUser).pipe(
+      tap(addUser=>{
+       const currentAcepetUsers = this.acrpetUsersSubject.getValue();
+       this.acrpetUsersSubject.next([...currentAcepetUsers,addUser]);
+      }),
+      catchError((error)=>{
+        console.error('Failed to update user:', error);
+        return throwError(() => error);
+      })
+    )
+  }
   getUsers(): User[] {
     return this.usersSubject.value;
   }

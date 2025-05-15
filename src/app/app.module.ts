@@ -23,6 +23,7 @@ import {
 } from '@angular/material/dialog';
 import { LoginComponent } from './Featurees/auth/login/login.component';
 import { RegisterComponent } from './Featurees/auth/register/register.component';
+import { AcreptUserComponent } from './Featurees/acrept-user/acrept-user.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { RegisterComponent } from './Featurees/auth/register/register.component'
     AddUserComponent,
     FeatureesComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    AcreptUserComponent
   ],
   imports: [
     BrowserModule,
