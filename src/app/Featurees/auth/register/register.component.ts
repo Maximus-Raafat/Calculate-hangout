@@ -9,6 +9,7 @@ import { EspenseServicesService } from '../../../Core/services/espense-services.
 })
 export class RegisterComponent implements OnInit {
   registerForm!:FormGroup;
+  
   constructor(private fb:FormBuilder,private expenseService:EspenseServicesService ){ }
   
   ngOnInit(): void {
@@ -26,9 +27,6 @@ export class RegisterComponent implements OnInit {
     this.expenseService.registerUser(registerForm.name,registerForm.email,registerForm.password).subscribe(res=>{
       this.registerForm.reset();
     })
-
-  }
-  toggleUser(event:any) {
 
   }
 }

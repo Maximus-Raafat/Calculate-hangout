@@ -170,7 +170,48 @@ addUser(name:string, email:string,balance:number): Observable<User> {
       })
     )
   }
-  getUsers(): User[] {
+
+approveUser(UserData: any): Observable<any> {
+  return this.http.post(`${this.urlApi}/users`, UserData).pipe(
+    tap((responseUser) => {
+      const currentUsers = this.usersSubject.getValue();
+      this.usersSubject.next([...currentUsers, responseUser as any]);
+      this.updatedPendingUser(UserData.id);
+      // const pendingUsers = this.acrpetUsersSubject.getValue();
+      // const updatedPending = pendingUsers.filter(user => user.id !== UserData.id);
+      // this.acrpetUsersSubject.next(updatedPending);
+    }),
+    catchError((error) => {
+      console.error('Failed to approveUser:', error);
+      return throwError(() => error);
+    })
+  );
+}
+ updatedPendingUser(id:number) : void {
+  if (id) {
+   const pendingUsers = this.acrpetUsersSubject.getValue();
+   const updatedPending = pendingUsers.filter(user => user.id !== id);
+   this.acrpetUsersSubject.next(updatedPending);
+    this.deleteAcepetUser(id).subscribe({
+      next: (res) => console.log('User deleted successfully', res),
+      error: (err) => console.error('Error deleting user', err)
+    });
+    } else {
+    console.log("No ID provided for removing pending user")
+  }
+ }
+ deleteAcepetUser(userId:any):Observable<any> {
+  console.log(userId)
+  return this.http.delete(`${this.urlApi}/acreptUser/${userId}`).pipe(
+    tap((res)=>{ 
+      console.log("res=> > ", res)
+    }),catchError((error)=> {
+      console.error('Failed to delete:', error);
+      return throwError(() => error);
+    })
+  )
+ }
+ getUsers(): User[] {
     return this.usersSubject.value;
   }
 

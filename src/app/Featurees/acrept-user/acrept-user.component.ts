@@ -3,6 +3,7 @@ import { User } from '../../Core/models/user.model';
 import { EspenseServicesService } from '../../Core/services/espense-services.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ContentObserver } from '@angular/cdk/observers';
 
 @Component({
   selector: 'app-acrept-user',
@@ -11,7 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class AcreptUserComponent implements OnInit{
   acreptUserList:any[]=[];
-  selectedRoles: number[] = [];
+  selectedRoles: string = '';
   dialogRef!: MatDialogRef<any>;
   readonly dialog = inject(MatDialog);  
   formAceptUser!:FormGroup;
@@ -34,8 +35,9 @@ export class AcreptUserComponent implements OnInit{
   }
 
   submitAddOnUser(){ 
-    // this.intallForm(this.formAceptUser.value)
-    console.log(this.formAceptUser.value)
+    this.exposerService.approveUser(this.formAceptUser.value).subscribe((res)=>{
+      console.log(res)
+    })
   }
   intallForm(userAcrept:any):void{ 
     console.log("userAcrept",userAcrept)
@@ -70,14 +72,15 @@ export class AcreptUserComponent implements OnInit{
     this.intallForm(userAcrept);
     this.openDialog(templateRef);
   }
-
+cancel(user:any):void {
+  this.exposerService.updatedPendingUser(user.id);
+}
 toggleUser(role: any) {
-    const index = this.selectedRoles.indexOf(role.id);
-    if (index === -1) {
-      this.selectedRoles.push(role.id);
-    } else {
-      this.selectedRoles.splice(index, 1);
-    }
-      this.formAceptUser.get('role')?.setValue(this.selectedRoles);
+    this.selectedRoles = role.role;
+    this.formAceptUser.get('role')?.setValue(role.role);
+  }
+  approveUser():void { 
+    console.log("ApproveUser",this.formAceptUser.value)
+  }
 
-  }}
+}

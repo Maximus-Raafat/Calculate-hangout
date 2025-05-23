@@ -61,16 +61,7 @@
           Password must be at least 8 characters.
         </div>
         </div>
-          <div class="form-check" *ngFor="let userRole of usersRole">
-              <input 
-              class="form-check-input" 
-              type="checkbox"  
-              [value]="userRole.id"  
-              (change)="toggleUser(userRole.role)">
-              <label class="form-check-label">
-              {{ userRole.role }}
-              </label>
-          </div>
+  
         <!-- 2 column grid layout -->
         <!-- <div class="row mb-4">
           <div class="col-md-6 d-flex justify-content-center">
@@ -87,7 +78,7 @@
         </div> -->
   
         <!-- Submit button -->
-            <button type="submit" class="btn btn-primary btn-block mb-4" [disabled]="registerForm.invalid">Acrept That User</button>
+            <button type="submit" class="btn btn-primary btn-block mb-4" [disabled]="registerForm.invalid">Sign up</button>
   
         <!-- Register buttons -->
       </form>
