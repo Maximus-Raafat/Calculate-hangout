@@ -99,30 +99,30 @@
   ],
   "users": [
     {
+     "id": "u1",
       "name": "Ahmed",
       "email": "ahmed@example.com",
       "password": "123456789",
       "role": "admin",
       "balance": 100,
-      "expenses": [],
-      "id": "u1"
+      "expenses": []
     },
     {
+      "id": "u2",
       "name": "Sarah",
       "email": "sarah@example.com",
-      "password": "123456",
+      "password": "123456789",
       "role": "user",
       "balance": -50,
-      "expenses": [],
-      "id": "u2"
+      "expenses": []
     },
     {
+      "id": "u3",
       "name": "Kareem",
       "email": "kareem@example.com",
-      "password": "123456",
+      "password": "123456789",
       "role": "user",
       "balance": -50,
-      "id": "u3",
       "expenses": []
     }
   ],

@@ -22,9 +22,17 @@ export class LoginComponent implements OnInit{
   }
   
   submit() {
-    const login = this.loginForm.value;
-    console.log(login.email,login.password);
-    this.authService.login(login.eamil, login.password).subscribe();
+   const login = this.loginForm.value;
+  console.log(login.email, login.password);
+  this.authService.login(login.email, login.password).subscribe({
+    next: () => {
+      console.log("success")
+    },
+    error: (err) => {
+      console.error(err);
+      alert('Invalid credentials. Please try again.');
+    }
+  });
   }
 
 

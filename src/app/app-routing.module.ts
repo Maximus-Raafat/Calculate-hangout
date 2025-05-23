@@ -12,10 +12,19 @@ const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent},
   { path: 'register', component: RegisterComponent},
-  { path: 'dashBord', component: ExpensesComponent ,canActivate: [AuthGuard]},
-  { path: 'addExpose', component: AddExpenseComponent ,canActivate: [AuthGuard]},
-  { path: 'addUser', component: AddUserComponent ,canActivate: [AuthGuard]},
-  { path: 'aceptUser', component: AcreptUserComponent ,canActivate: [AuthGuard]},
+  {
+    path: 'dashBord', component: ExpensesComponent ,
+    canActivate: [AuthGuard],
+    data: { roles: ['user', 'admin']}
+  },
+  {
+     path: 'addExpose',
+     component: AddExpenseComponent,
+     canActivate: [AuthGuard],
+     data: { roles: ['user', 'admin']}
+    },
+  { path: 'addUser', component: AddUserComponent ,canActivate: [AuthGuard],data: { role: ['admin']}},
+  { path: 'aceptUser', component: AcreptUserComponent ,canActivate: [AuthGuard],data: { role: ['admin']}},
 
 ];
 

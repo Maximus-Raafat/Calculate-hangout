@@ -18,21 +18,21 @@ export class AuthService {
         this.isLoggedInSubject.next(true);
     }
   }
-  login(email:string,password:number):Observable<any> {
-    return this.http.get<any[]>(`${this.authUrl}?eamil=${email}&passowrd${password}`).pipe(
-      tap(users=>{
-        if (users.length) {
-          this.currentUser = users[0];
-          localStorage.setItem("user",JSON.stringify(this.currentUser));
-          this.isLoggedInSubject.next(true);
-          this.router.navigate(['/dashBord'])
-        } else {
-          throw new Error('Invaild credentials');
-        }
-      })
-    )
-  }
-
+login(email: string, password: string): Observable<any> {
+  return this.http.get<any[]>(`${this.authUrl}?email=${email}&password=${password}`).pipe(
+    tap(users => {
+      console.log("users=> ", users);
+      if (users.length) {
+        this.currentUser = users[0];
+        localStorage.setItem("user", JSON.stringify(this.currentUser));
+        this.isLoggedInSubject.next(true);
+        this.router.navigate(['/dashBord']);
+      } else {
+        throw new Error('Invalid credentials');
+      }
+    })
+  );
+}
   logout(){
     this.currentUser = null;
     localStorage.removeItem("user");
